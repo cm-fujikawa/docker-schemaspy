@@ -2,7 +2,7 @@
 
 SchemaSpy公式Dockerイメージに日本語フォントをインストールし、日本語化する方法をご紹介します。
 
-## Dockerコンテナ
+## Dockerイメージを作成
 
 1. Dockerイメージを作成します。
 
@@ -18,8 +18,29 @@ SchemaSpy公式Dockerイメージに日本語フォントをインストール�
         --net=host \
         -v $PWD/output:/output \
         -v $PWD/schemaspy.properties:/schemaspy.properties \
-        schemaspy/japanese:ipaexg00401
+        schemaspy/japanese:ipaexg00401 -vizjs
     ```
+
+## Docker HubからDockerイメージをプル
+
+1. Docker HubからDockerイメージをプルします。
+
+    ```shell
+    docker pull cmfujikawa/schemaspy
+    ```
+
+1. Dockerコンテナを起動して、`SchemaSpy`を実行します。
+
+    ```shell
+    docker run \
+        --rm \
+        --net=host \
+        -v $PWD/output:/output \
+        -v $PWD/schemaspy.properties:/schemaspy.properties \
+        cmfujikawa/schemaspy -vizjs
+    ```
+
+## 共通
 
 1. `./output`フォルダに実行結果が出力されます。
 1. `./output/index.html`ファイルをブラウザで開きます。
