@@ -25,7 +25,6 @@ SchemaSpy公式Dockerイメージに日本語フォントをインストール�
     ```shell
     docker run \
         --rm \
-        --net=host \
         -v $PWD/output:/output \
         -v $PWD/schemaspy.properties:/schemaspy.properties \
         cmfujikawa/schemaspy -vizjs
