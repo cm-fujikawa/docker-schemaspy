@@ -7,30 +7,43 @@ SchemaSpy公式Dockerイメージに日本語フォントをインストール�
 1. Dockerイメージを作成します。
 
     ```shell
-    docker build -t cmfujikawa/schemaspy .
-    ```
-
-## Docker HubからDockerイメージをプル
-
-1. Docker HubからDockerイメージをプルします。
-
-    ```shell
-    docker pull cmfujikawa/schemaspy
+    docker build -t schemaspy .
     ```
 
 ## 共通
+
+1. `schemaspy.properties`ファイルを設定します。
+    * 例) PostgreSQLの場合
+
+    ```shell
+    export POSTGRES_USER=postgres
+    export POSTGRES_PASSWORD=mysecretpassword
+    export POSTGRES_DB=dvdrental
+
+    cat <<EOF > schemaspy.properties
+    schemaspy.dp=./drivers
+    schemaspy.o=./output
+    
+    schemaspy.t=pgsql11
+    schemaspy.host=host.docker.internal
+    schemaspy.port=5432
+    schemaspy.db=${POSTGRES_DB}
+    schemaspy.s=public
+    schemaspy.u=${POSTGRES_USER}
+    schemaspy.p=${POSTGRES_PASSWORD}
+    EOF
+    ```
 
 1. Dockerコンテナを起動して、`SchemaSpy`を実行します。
 
     ```shell
+    mkdir output
     docker run \
         --rm \
         -v $PWD/output:/output \
         -v $PWD/schemaspy.properties:/schemaspy.properties \
-        cmfujikawa/schemaspy -vizjs
+        schemaspy -vizjs
     ```
-
-## 共通
 
 1. `./output`フォルダに実行結果が出力されます。
 1. `./output/index.html`ファイルをブラウザで開きます。
